@@ -1,0 +1,84 @@
+/* Christine Phan
+ * --------------
+ * Problem: There are  buildings in a certain two-dimensional landscape. Each building has a height.
+ * If you join  adjacent buildings, they will form a solid rectangle. 
+ * Given  buildings, find the greatest such solid area formed by consecutive buildings.
+ * === INPUT =====
+ * Input Format 
+ * The first line contains , the number of buildings altogether. 
+ * The second line contains  space-separated integers, each representing the height of a building.
+ */ 
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner (System.in); 
+        
+        int count = scan.nextInt();
+        int array []= new int[count]; 
+        
+        for (int i = 0; i < count; i++) {
+            array[i] = scan.nextInt(); 
+        }
+        
+        int max_sz = array[0]; 
+        
+        for (int i = 0; i < count; i++) { 
+            int cur_sz = buildingSZ(array, i); 
+            if (cur_sz > max_sz) {
+                max_sz = cur_sz;
+            }   
+            
+        }
+        System.out.println(max_sz);
+    }
+    
+    public static int buildingSZ(int array[], int count) {
+        if (array.length - 1 == count) {
+            return array[count]; 
+        }
+        int distance = 0;
+        
+        if (count != 0 && array[count] <= array[count - 1]) {
+            distance = build_backward(array, count); 
+        }
+        
+        if (count != array.length - 1 && array[count] <= array[count + 1]) {
+            distance += build_forward(array, count); 
+        }
+        if (distance == 0) {
+            distance = 1;
+        }
+        return (distance) * array[count]; 
+    } 
+    
+    public static int build_forward(int array[], int count) {
+        int distance = 0;
+        for (int i = count; i < array.length; i++) {
+            if (array[count] <= array[i]) {
+                distance++; 
+            } else { 
+                break;
+            }
+        }
+        return distance; 
+    }
+    
+    public static int build_backward(int array[], int count) {
+        int distance = 0;
+        for (int i = count -1; i >= 0; i --) {
+            if (array[count] <= array[i]) {
+                distance++; 
+            } else {
+                break;
+            }
+        }
+        return distance; 
+    }
+}
