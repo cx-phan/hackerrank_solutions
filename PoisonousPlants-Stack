@@ -1,0 +1,67 @@
+/* Poisonous Plants
+ * Author: Christine Phan
+ * There are  plants in a garden. Each of these plants has been added with some amount of pesticide. 
+ * After each day, if any plant has more pesticide than the plant at its left, being weaker than the left one, 
+ * it dies. You are given the initial values of the pesticide in each plant. Print the number of days after which 
+ * no plant dies, i.e. the time after which there are no plants with more pesticide content than the plant to their left.
+ * ====== Input Format ===========
+ * The input consists of an integer N. The next line consists of N integers describing the array
+ * where P[i] denotes the amount of pesticide in plant p.
+ * == NOTE ===
+ * Works on most cases, has some time-outs. If the requirement is that you must use stacks, this is the method I came up with.
+ */ 
+ 
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in); 
+        Stack s1 = new Stack(); 
+        Stack s2 = new Stack();
+        
+        int count = scan.nextInt(); 
+        while (scan.hasNextInt()) {
+            s1.push(scan.nextInt()); 
+        }
+        
+        boolean end_search = false;
+        int count2 = 0; 
+        
+        while (!end_search || s1.isEmpty()) {
+            int cur = (int) s1.pop();
+
+            int c1 = 0;
+            while (!s1.isEmpty()) {
+                c1++; 
+                if (cur <= (int) s1.peek()) { 
+                    s2.push(cur);  
+                } 
+                cur = (int) s1.pop(); 
+                
+            }
+            s2.push(cur); 
+
+            int c2 = 0;
+            while (!s2.isEmpty()) {
+                s1.push(s2.pop()); 
+                c2++; 
+            }
+            
+            if (count == c2) {
+                break;
+            }
+            count2++;
+            count = c2; 
+        }
+        
+        System.out.println(count2);
+        
+        
+        
+    }
+}
