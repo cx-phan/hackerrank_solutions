@@ -1,0 +1,55 @@
+/* Hackerrank: Poisonous Plants
+ * ----------------------------
+ * Same problem, but now implemented via Queue.
+ */ 
+ 
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Queue <Integer> queue = new LinkedList<Integer>(); 
+        Scanner scan = new Scanner(System.in); 
+        
+        int count = scan.nextInt(); 
+        while (scan.hasNextInt()) {
+            queue.add(scan.nextInt());
+        }
+        
+        int iterate = 0;
+        
+        while (queue.peek() != null) {
+            int c2 = 0; 
+            int past = queue.remove(); 
+            queue.add(past); 
+            int cur = queue.peek();
+            
+            for (int i = 0; i < count; i++) {
+
+                
+                if (cur <= past) {
+                    queue.add(cur);
+
+                    c2++; 
+                }
+                past = cur;
+                cur = queue.remove(); 
+                
+            }
+
+            if (c2 == count) break; 
+            count = c2;
+            iterate++; 
+        }
+                
+        
+        System.out.println(iterate);
+        
+        
+      
+    }
+}
