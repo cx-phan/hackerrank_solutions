@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    
+    public int reduceToZero(Integer n) {
+        
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>(); 
+        Queue q = new LinkedList<>(); 
+        q.add(n);
+        map.put(n, 0);
+        
+        while (!q.isEmpty()) {
+            Integer cur = (Integer) q.remove();
+            int count = map.get(cur); 
+            
+            if (cur == 0) {
+                return count; 
+            }
+            
+            if (cur != 0) {
+                Integer minus = cur - 1; 
+                if (map.get(minus) == null) {
+                    map.put(minus, count + 1);
+                    q.add(minus);
+                } 
+                
+                Integer sqrt = (int) Math.ceil(Math.sqrt(cur)); 
+                
+                for (int i = sqrt; i < cur / 2 + 1; i++) {
+                    if (cur % i == 0 && map.get(i) == null) {
+                        map.put(i, count + 1); 
+                        q.add(i); 
+                    }
+                }
+            }
+
+        }
+        
+        return 0;
+        
+    }
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int queries = sc.nextInt();
+        Solution s = new Solution();
+        for (int i = 0; i < queries; i++) {
+            System.out.println(s.reduceToZero(sc.nextInt()));
+        }
+    
+    }
+}
