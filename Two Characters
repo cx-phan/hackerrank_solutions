@@ -1,0 +1,49 @@
+
+import sys
+
+
+s_len = int(input().strip())
+s = input().strip()
+
+def recurse(string): 
+    set_str = set(string)
+    if len(set_str) == 2:
+        return len(string)
+    else: 
+        max = 0
+        for char in set_str: 
+            value = recurse(test_duplicates(test_delete(string, char)))
+            if value > max:
+                max = value
+                
+        return max
+            
+            
+def test_delete(string, character):
+    new_str = ''
+    for i, char_type in enumerate(string): 
+        if char_type != character:
+            new_str = new_str + char_type
+    return new_str
+
+def test_duplicates(s): 
+    while True: 
+        original = s
+        for i in range(0, len(s)-1): 
+            if s[i] == s[i+1]: 
+                s = test_delete(s, s[i])
+                s_len = len(s)
+                break
+                
+        if original == s: 
+            break
+    return s
+    
+def main(s, s_len):
+    
+    s = test_duplicates(s)
+    print(recurse(s))
+    
+    return
+
+main(s, s_len) 
