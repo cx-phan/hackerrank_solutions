@@ -1,0 +1,43 @@
+#!/bin/python3
+
+import sys
+
+n = int(input().strip())
+s = input().strip()
+k = int(input().strip())
+
+alpha = 'abcdefghijklmnopqrstuvwxyz'
+alpha2 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+def getPosition(character, alpha):
+    if character not in alpha: 
+        return -1
+    else:
+        for i, char in enumerate(alpha):
+            if char == character:
+                return i
+        
+        return -1
+    
+def encrypt(s, k): 
+    new_str = ''
+    for char in s: 
+        pos = getPosition(char, alpha)
+        if pos > -1: 
+            turn = pos + k
+            while( turn >= 26): 
+                turn = turn - 26
+            new_str = new_str + alpha[turn]
+        else:
+            pos = getPosition(char, alpha2)
+            if pos > -1:
+                turn = pos + k
+                while(turn >= 26): 
+                    turn = turn - 26
+                new_str = new_str + alpha2[turn]
+            else:
+                new_str = new_str + char
+            
+    return new_str
+
+print(encrypt(s, k))
