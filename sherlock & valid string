@@ -1,0 +1,46 @@
+s = input().strip() 
+
+def isValid(s):
+    dictionary = {}
+    for char in s: 
+        if char not in dictionary:
+            dictionary[char] = 1
+        else:    
+            dictionary[char] += 1 
+    
+    val1 = dictionary[s[0]]
+    for key, value in dictionary.items():
+        if val1 != value:
+            return False
+    
+    return True
+
+def delete(string, character):
+    new_str = ''
+    for i, char_type in enumerate(string): 
+        if char_type != character:
+            new_str = new_str + char_type
+    return new_str
+
+def removalCount(s, count): 
+    if isValid(s):
+        return count
+    else: 
+        mini = float('inf')
+        for char in set(s):
+            amount = removalCount(delete(s, char), count + 1)
+            if amount < mini:
+                mini = amount
+            
+        return mini
+    
+def main (s): 
+    value = removalCount(s, 0)
+    if value <= 1:
+        print("YES")
+    else:
+        print ("NO")
+    
+    
+main(s)
+        
